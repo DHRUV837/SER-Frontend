@@ -7,8 +7,8 @@ const DealHistoryPage = () => {
     <SalesLayout>
       <div className="space-y-10">
         <PageHeader
-          heading="Deal Portfolio"
-          subtitle="Monitor all assigned and submitted deals with their current status."
+          heading="Deal History"
+          subtitle="View a complete archive of all your past deals and their outcomes."
         />
         <DealHistory />
       </div>

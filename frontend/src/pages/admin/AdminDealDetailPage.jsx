@@ -53,7 +53,7 @@ const AdminDealDetailPage = () => {
         <AdminLayout>
             <PageHeader
                 heading={deal.dealName || deal.organizationName}
-                subtitle={`Deal ID: #${deal.id}`}
+                subtitle={`Opportunity Reference: #${deal.id} — Detailed Assessment`}
                 actions={
                     <div className="flex items-center gap-3">
                         <StatusBadge status={deal.status} />

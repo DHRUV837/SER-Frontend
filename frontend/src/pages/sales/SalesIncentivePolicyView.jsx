@@ -27,8 +27,8 @@ const SalesIncentivePolicyView = () => {
     return (
         <SalesLayout>
             <PageHeader
-                heading="Incentive Policies"
-                subtitle="View commission rates and bonus structures for your deals."
+                heading="Commission Schemes"
+                subtitle="Review active commission structures and bonus eligibility criteria for your deals."
             />
 
             {/* Policies Grid */}

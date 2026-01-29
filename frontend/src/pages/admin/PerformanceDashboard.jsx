@@ -86,8 +86,8 @@ const PerformanceDashboard = () => {
                     <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-indigo-600/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
                     <div className="relative z-10 flex flex-col md:flex-row justify-between items-end gap-6">
                         <div>
-                            <h1 className="text-3xl md:text-4xl font-black text-white mb-2">Sales Leaderboard</h1>
-                            <p className="text-slate-400">Real-time performance ranking of your sales force.</p>
+                            <h1 className="text-3xl md:text-4xl font-black text-white mb-2">Sales Force Performance</h1>
+                            <p className="text-slate-400">Comprehensive analytics on team efficiency, revenue generation, and rank distribution.</p>
                         </div>
                         <div className="flex gap-4">
                             <div className="text-right">

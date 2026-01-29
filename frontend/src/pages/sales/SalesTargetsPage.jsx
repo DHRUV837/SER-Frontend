@@ -62,8 +62,8 @@ const SalesTargetsPage = () => {
         <SalesLayout>
             <div className="space-y-8 animate-in fade-in duration-500">
                 <PageHeader
-                    heading="Targets & Growth Tracker"
-                    subtitle="Measure progress toward your goals and upcoming incentive tiers."
+                    heading="Targets & Achievement Tracking"
+                    subtitle="Monitor assigned targets, track progress, and understand what’s required to reach the next incentive tier."
                 />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -155,8 +155,8 @@ const SalesTargetsPage = () => {
                                                 style={{ left: `${milestone}%` }}
                                             >
                                                 <div className={`w-4 h-4 rounded-full border-2 ${progressPercentage >= milestone
-                                                        ? 'bg-primary-500 border-white shadow-lg'
-                                                        : 'bg-gray-300 border-gray-400'
+                                                    ? 'bg-primary-500 border-white shadow-lg'
+                                                    : 'bg-gray-300 border-gray-400'
                                                     }`} />
                                                 <span className="absolute top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-text-muted whitespace-nowrap">
                                                     {milestone}%
@@ -239,10 +239,10 @@ const SalesTargetsPage = () => {
                                         <div
                                             key={tier.name}
                                             className={`relative p-4 rounded-xl border-2 transition-all ${isAchieved
-                                                    ? `bg-gradient-to-r ${tier.color} border-transparent shadow-lg`
-                                                    : isCurrent || isNext
-                                                        ? 'border-primary-300 dark:border-primary-700 bg-primary-50/50 dark:bg-primary-900/10'
-                                                        : 'border-border-subtle bg-surface-2'
+                                                ? `bg-gradient-to-r ${tier.color} border-transparent shadow-lg`
+                                                : isCurrent || isNext
+                                                    ? 'border-primary-300 dark:border-primary-700 bg-primary-50/50 dark:bg-primary-900/10'
+                                                    : 'border-border-subtle bg-surface-2'
                                                 }`}
                                         >
                                             <div className="flex items-center justify-between">

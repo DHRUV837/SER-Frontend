@@ -1,6 +1,7 @@
 import SalesLayout from "../../layouts/SalesLayout";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import PageHeader from "../../components/common/PageHeader";
 
 const NotificationManagement = () => {
     const [title, setTitle] = useState("");
@@ -62,7 +63,10 @@ const NotificationManagement = () => {
     return (
         <SalesLayout>
             <div className="max-w-2xl mx-auto">
-                <h1 className="text-2xl font-semibold mb-6 text-text-primary">Manage Notifications</h1>
+                <PageHeader
+                    heading="Communication Center"
+                    subtitle="Configure and dispatch system-wide alerts, notifications, and directives."
+                />
 
                 <div className="card-modern p-8">
                     <form onSubmit={handleBroadcast} className="space-y-6">

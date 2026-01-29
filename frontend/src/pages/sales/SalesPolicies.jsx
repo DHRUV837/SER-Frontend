@@ -27,8 +27,8 @@ const SalesPolicies = () => {
         <SalesLayout>
             <div className="space-y-6">
                 <PageHeader
-                    heading="Company Policies"
-                    subtitle="Guidelines, Terms & Commission Structures. Stay informed about company regulations."
+                    heading="Company Policy & Guidelines"
+                    subtitle="Access general company policies, terms of service, and compliance guidelines."
                 />
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

@@ -83,7 +83,7 @@ const AuditLogs = () => {
             <div className="max-w-7xl mx-auto">
                 <PageHeader
                     heading="System Audit Trail"
-                    subtitle="Monitor all security events, user actions, and system changes."
+                    subtitle="Immutable record of all system interactions, security events, and data modifications."
                 />
 
                 {/* Filters */}

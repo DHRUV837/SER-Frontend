@@ -99,8 +99,8 @@ const AdminDealCreate = () => {
     return (
         <AdminLayout>
             <PageHeader
-                heading="Create & Assign New Deal"
-                subtitle="Assign a deal to a sales executive with all required details."
+                heading="Deal Origination"
+                subtitle="Initiate and configure new commercial opportunities for approval workflows."
             />
 
             <div className="max-w-3xl mx-auto">

@@ -114,8 +114,8 @@ const SalesLeaderboardPage = () => {
         <SalesLayout>
             <div className="space-y-8 animate-in fade-in duration-500">
                 <PageHeader
-                    heading="Sales Leaderboard"
-                    subtitle="Compare your performance with top sales executives."
+                    heading="Sales Rankings"
+                    subtitle="See how you rank among peers based on incentives and deal performance."
                     actions={
                         <div className="flex bg-surface-2 p-1 rounded-lg border border-border-subtle">
                             {["This Month", "Last Month", "This Year"].map(f => (

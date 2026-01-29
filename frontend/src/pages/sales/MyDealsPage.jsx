@@ -110,8 +110,8 @@ const MyDealsPage = () => {
     return (
         <SalesLayout>
             <PageHeader
-                heading="My Assigned Deals"
-                subtitle="Manage your assigned opportunities and track approval status."
+                heading="Assigned Opportunities"
+                subtitle="View, manage, and progress deals assigned to you, with clear approval status and next actions."
             />
 
             {/* Stats Summary */}

@@ -88,7 +88,7 @@ const IncentiveSimulator = () => {
       <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-500">
         <PageHeader
           heading="Incentive Simulator"
-          subtitle="Enterprise 'What-If' Analysis Engine. Estimate your potential earnings based on active policies."
+          subtitle="Forecast potential earnings by simulating deal values and applying different incentive policies."
         />
 
         {/* Disclaimer Banner */}

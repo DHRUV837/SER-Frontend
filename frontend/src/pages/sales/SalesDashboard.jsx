@@ -94,13 +94,12 @@ const SalesDashboard = () => {
                   <span className="text-3xl">👋</span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/80 uppercase tracking-wider">Welcome Back</p>
-                  <h1 className="text-3xl md:text-4xl font-bold">{auth?.user?.name || "Sales Executive"}</h1>
+                  <p className="text-sm font-medium text-white/80 uppercase tracking-wider">Welcome Back, {auth?.user?.name || "User"}</p>
+                  <h1 className="text-3xl md:text-4xl font-bold">Sales Performance Overview</h1>
                 </div>
               </div>
               <p className="text-lg text-white/90 max-w-2xl leading-relaxed">
-                You're doing great! You have <span className="font-bold text-yellow-300">{assignedDeals.length} active deals</span> and
-                you're <span className="font-bold text-yellow-300">{progressPercentage.toFixed(0)}% towards</span> your monthly target.
+                Track your earnings, deal activity, and incentive growth at a glance.
               </p>
             </div>
 

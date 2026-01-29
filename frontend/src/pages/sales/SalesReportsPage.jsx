@@ -192,8 +192,8 @@ const SalesReportsPage = () => {
         <SalesLayout>
             <div className="space-y-8 animate-in fade-in duration-500">
                 <PageHeader
-                    heading="Personal Performance Reports"
-                    subtitle="Download detailed summaries of your deals and earnings."
+                    heading="Reports & Analytics"
+                    subtitle="Generate and expor detailed reports on deal history, incentives, and performance metrics."
                 />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

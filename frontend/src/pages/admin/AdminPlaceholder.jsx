@@ -12,7 +12,7 @@ const AdminPlaceholder = ({ title }) => {
                         {title}
                     </h1>
                     <p className="text-text-secondary mt-2 text-lg">
-                        This enterprise module is currently under construction.
+                        This advanced capability is scheduled for a future release cycle.
                     </p>
                 </div>
                 <div className="w-full max-w-md bg-surface-2 h-2 rounded-full overflow-hidden mt-8">

@@ -105,8 +105,8 @@ const SalesPayouts = () => {
     return (
         <SalesLayout>
             <PageHeader
-                heading="Earnings Summary"
-                subtitle="Review your monthly and lifetime incentive payouts."
+                heading="Payout History"
+                subtitle="Track processed payments and pending payouts."
             />
 
             {/* Stats Cards */}

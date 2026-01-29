@@ -46,8 +46,8 @@ const PolicySimulation = () => {
     return (
         <SalesLayout>
             <PageHeader
-                heading="Policy Impact Simulator"
-                subtitle="Test policy changes and preview financial impact before deployment."
+                heading="Policy Impact Simulation"
+                subtitle="Model and forecast the financial implications of incentive policy adjustments prior to deployment."
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
