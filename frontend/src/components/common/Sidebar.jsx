@@ -128,7 +128,7 @@ const Sidebar = () => {
         {!isCollapsed && (
           <button
             onClick={toggleCollapse}
-            className="p-1.5 rounded-lg text-text-muted hover:bg-surface-2 hover:text-text-primary transition-colors"
+            className="p-1.5 rounded-lg text-text-muted hover:bg-slate-100 dark:hover:bg-white/10 hover:text-text-primary transition-all duration-200"
           >
             <ChevronLeft size={18} />
           </button>
@@ -186,7 +186,7 @@ const Sidebar = () => {
                     group relative flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200
                     ${isActive
                       ? "bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300 font-medium"
-                      : "text-text-secondary hover:bg-surface-2 hover:text-text-primary"
+                      : "text-text-secondary hover:bg-slate-100 dark:hover:bg-white/10 hover:text-text-primary hover:translate-x-1"
                     }
                     ${isCollapsed ? "justify-center" : ""}
                   `}
@@ -230,14 +230,14 @@ const Sidebar = () => {
         {isCollapsed ? (
           <button
             onClick={toggleCollapse}
-            className="w-full flex justify-center p-2 rounded-lg hover:bg-surface-2 text-text-muted hover:text-text-primary transition-colors"
+            className="w-full flex justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 text-text-muted hover:text-text-primary transition-all duration-200 hover:scale-105"
           >
             <ChevronRight size={20} />
           </button>
         ) : (
           <button
             onClick={logout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-rose-50 dark:hover:bg-rose-900/10 hover:text-rose-600 dark:hover:text-rose-400 transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-rose-50 dark:hover:bg-rose-900/10 hover:text-rose-600 dark:hover:text-rose-400 transition-colors hover:translate-x-1"
           >
             <LogOut size={18} />
             <span className="text-sm font-medium">Sign Out</span>
