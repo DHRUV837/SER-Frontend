@@ -36,7 +36,7 @@ const LandingPage = () => {
       const role = auth.user.role;
       navigate(role === "ADMIN" ? "/admin" : "/sales");
     } else {
-      navigate('/login');
+      navigate('/register');
     }
   };
 

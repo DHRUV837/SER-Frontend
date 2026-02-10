@@ -1,8 +1,15 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "./auth/Login";
+import Register from "./auth/Register";
 import RequireAuth from "./auth/RequireAuth";
 import LandingPage from "./pages/LandingPage";
+// ... existing imports
+
+// ... inside Routes
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 import SalesDashboard from "./pages/sales/SalesDashboard";
 import DealHistoryPage from "./pages/sales/DealHistoryPage";
 import IncentiveSimulator from "./pages/IncentiveSimulator";
