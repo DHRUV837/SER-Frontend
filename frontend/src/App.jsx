@@ -65,6 +65,7 @@ const App = () => {
       />
 
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       {/* SHARED ROUTES (ADMIN & SALES) */}
       <Route element={<RequireAuth allowedRoles={["ADMIN", "SALES"]} />}>
