@@ -7,9 +7,6 @@ import LandingPage from "./pages/LandingPage";
 // ... existing imports
 
 // ... inside Routes
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
 import SalesDashboard from "./pages/sales/SalesDashboard";
 import DealHistoryPage from "./pages/sales/DealHistoryPage";
 import IncentiveSimulator from "./pages/IncentiveSimulator";
