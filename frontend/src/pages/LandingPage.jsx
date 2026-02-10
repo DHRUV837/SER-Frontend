@@ -498,8 +498,13 @@ const LandingPage = () => {
                       {feature.desc}
                     </p>
 
-                    <div className="flex items-center text-xs font-medium text-slate-500 group-hover:text-white transition-colors">
-                      Learn more <ArrowRight className="w-3 h-3 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    <div className="mt-auto pt-4 border-t border-slate-800/50 flex items-center justify-between group/link cursor-pointer">
+                      <span className="text-xs font-semibold text-indigo-400 group-hover/link:text-indigo-300 transition-colors uppercase tracking-wider">
+                        Explore Feature
+                      </span>
+                      <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover/link:bg-indigo-500 group-hover/link:text-white transition-all duration-300">
+                        <ArrowRight className="w-4 h-4 transform group-hover/link:-rotate-45 transition-transform" />
+                      </div>
                     </div>
                   </motion.div>
                 ))}
