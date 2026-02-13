@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: sales-incentive-backend
+    env: docker
+    region: singapore
+    plan: free
+    branch: main
+    rootDir: SalesIncentiveSystem
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DB_URL
+        fromDatabase:
+          name: sales-db
+          property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: sales-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: sales-db
+          property: password
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+
+databases:
+  - name: sales-db
+    databaseName: sales_incentive
+    user: sales_user
+    region: singapore
+    plan: free

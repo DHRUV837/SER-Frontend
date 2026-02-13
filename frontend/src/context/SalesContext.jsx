@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import { useAuth } from "./AuthContext";
 
 const SalesContext = createContext();
@@ -22,7 +22,7 @@ export const SalesProvider = ({ children }) => {
 
   const fetchPerformance = async (targetUserId) => {
     try {
-      const res = await axios.get(`http://localhost:8080/performance?userId=${targetUserId}`);
+      const res = await api.get(`/performance?userId=${targetUserId}`);
       if (res.data && res.data.currentMonthTarget) {
         setMonthlyTarget(res.data.currentMonthTarget);
       }
@@ -35,7 +35,7 @@ export const SalesProvider = ({ children }) => {
     // If targetUserId is provided, we fetch deals for THAT user (e.g. My Deals)
     // If NOT provided, we might be an Admin fetching ALL deals.
 
-    let url = "http://localhost:8080/api/deals";
+    let url = "/api/deals";
     const params = new URLSearchParams();
 
     // 1. If we want a SPECIFIC user's deals
@@ -53,7 +53,7 @@ export const SalesProvider = ({ children }) => {
     }
 
     try {
-      const res = await axios.get(url);
+      const res = await api.get(url);
       setDeals(res.data);
     } catch (err) {
       console.error("Failed to fetch deals", err);
@@ -69,7 +69,7 @@ export const SalesProvider = ({ children }) => {
 
     try {
       const payload = { ...deal, user: { id: userId } };
-      const res = await axios.post("http://localhost:8080/api/deals", payload);
+      const res = await api.post("/api/deals", payload);
       setDeals([...deals, res.data]);
       fetchPerformance(userId); // Refresh performance data to update targets/tier
     } catch (err) {
@@ -97,7 +97,7 @@ export const SalesProvider = ({ children }) => {
     ));
 
     try {
-      await axios.patch(`http://localhost:8080/api/deals/${id}/status`, { status: newStatus });
+      await api.patch(`/api/deals/${id}/status`, { status: newStatus });
       fetchPerformance(userId); // Refresh performance data
     } catch (err) {
       console.error("Failed to update status", err);
@@ -111,7 +111,7 @@ export const SalesProvider = ({ children }) => {
 
     if (userId) {
       try {
-        await axios.put("http://localhost:8080/performance/target", { userId, target });
+        await api.put("/performance/target", { userId, target });
       } catch (err) {
         console.error("Failed to save target", err);
       }

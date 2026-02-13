@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import api from "../api";
 
 const AuthContext = createContext();
 
@@ -40,35 +41,25 @@ export const AuthProvider = ({ children }) => {
   }
 
   /* New Register Function */
+  /* New Register Function */
   const register = async (name, email, password, role, extraData = {}) => {
-    const response = await fetch("http://localhost:8080/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, role, ...extraData })
-    });
+    try {
+      // Use api.post instead of fetch
+      const { data } = await api.post("/api/auth/register", {
+        name,
+        email,
+        password,
+        role,
+        ...extraData
+      });
 
-    if (!response.ok) {
-      // Try to parse as JSON first, fall back to text
-      const contentType = response.headers.get("content-type");
-      let errorMessage = "Registration failed";
-
-      try {
-        if (contentType && contentType.includes("application/json")) {
-          const err = await response.json();
-          errorMessage = err.message || err || errorMessage;
-        } else {
-          errorMessage = await response.text();
-        }
-      } catch (parseError) {
-        console.error("Error parsing error response:", parseError);
-      }
-
+      login(data);
+      return data;
+    } catch (error) {
+      // Axios error handling
+      const errorMessage = error.response?.data?.message || error.response?.data || error.message || "Registration failed";
       throw new Error(errorMessage);
     }
-
-    const data = await response.json();
-    login(data);
-    return data;
   };
 
   return (

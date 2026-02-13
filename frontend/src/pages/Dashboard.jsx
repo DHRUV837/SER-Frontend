@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 
@@ -8,7 +8,7 @@ function Dashboard() {
   const [deals, setDeals] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/deals")
+    api.get("/api/deals")
       .then(res => setDeals(res.data))
       .catch(console.error);
   }, []);

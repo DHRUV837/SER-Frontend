@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import AdminLayout from "../../layouts/AdminLayout";
 import PageHeader from "../../components/common/PageHeader";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ const AdminDealCreate = () => {
     const fetchSalesUsers = async () => {
         try {
             const userId = localStorage.getItem("userId") || "1";
-            const response = await axios.get("http://localhost:8080/api/users", {
+            const response = await api.get("/api/users", {
                 params: { currentUserId: userId }
             });
             console.log("All users:", response.data); // Debug
@@ -55,7 +55,7 @@ const AdminDealCreate = () => {
     const fetchPolicies = async () => {
         try {
             // Fetch INCENTIVE policies, not company policies
-            const response = await axios.get("http://localhost:8080/api/policy?type=INCENTIVE");
+            const response = await api.get("/api/policy?type=INCENTIVE");
             console.log("Incentive Policies:", response.data); // Debug
             const activePolicies = response.data.filter(p => p.active);
             setPolicies(activePolicies);
@@ -78,13 +78,13 @@ const AdminDealCreate = () => {
         setLoading(true);
 
         try {
-            await axios.post("http://localhost:8080/admin/deals", formData);
+            await api.post("/admin/deals", formData);
 
             // Onboarding Progress: Mark 'First Deal' as complete
             try {
                 const userId = localStorage.getItem("userId");
                 if (userId) {
-                    await axios.post("http://localhost:8080/api/onboarding/progress/update", {
+                    await api.post("/api/onboarding/progress/update", {
                         userId: userId,
                         task: "firstDeal"
                     });

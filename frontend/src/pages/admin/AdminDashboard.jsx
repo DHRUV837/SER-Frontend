@@ -1,6 +1,6 @@
 import SalesLayout from "../../layouts/SalesLayout";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../api";
 import { Link } from "react-router-dom";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { useAuth } from "../../context/AuthContext";
@@ -18,10 +18,10 @@ const AdminDashboard = () => {
                 // Pass requestorId to ensure backend knows who is asking (Global vs Org Admin)
                 const requestorId = auth.user?.id;
                 const url = requestorId
-                    ? `http://localhost:8080/api/deals?requestorId=${requestorId}`
-                    : "http://localhost:8080/api/deals";
+                    ? `/api/deals?requestorId=${requestorId}`
+                    : "/api/deals";
 
-                const res = await axios.get(url);
+                const res = await api.get(url);
                 setDeals(res.data);
                 setLoading(false);
             } catch (err) {
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
 
         // Check onboarding status for admin users
         if (auth.user && auth.user.role === "ADMIN") {
-            axios.get(`http://localhost:8080/api/onboarding/progress/${auth.user.id}`)
+            api.get(`/api/onboarding/progress/${auth.user.id}`)
                 .then(res => {
                     setOnboardingCompleted(res.data.onboardingCompleted || false);
                 })

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import SalesLayout from "../../layouts/SalesLayout";
@@ -23,7 +23,7 @@ const MyDealsPage = () => {
     const fetchMyDeals = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:8080/api/deals?userId=${userId}`);
+            const response = await api.get(`/api/deals?userId=${userId}`);
             const sortedDeals = response.data.sort((a, b) => new Date(b.updatedAt || b.date) - new Date(a.updatedAt || a.date));
             setDeals(sortedDeals);
         } catch (error) {
@@ -92,7 +92,7 @@ const MyDealsPage = () => {
 
     const handleStatusUpdate = async (dealId, newStatus) => {
         try {
-            await axios.patch(`http://localhost:8080/api/deals/${dealId}/status`, {
+            await api.patch(`/api/deals/${dealId}/status`, {
                 status: newStatus,
                 comment: newStatus === "IN_PROGRESS" ? "Started working on this deal." : "Deal submitted for approval."
             });
