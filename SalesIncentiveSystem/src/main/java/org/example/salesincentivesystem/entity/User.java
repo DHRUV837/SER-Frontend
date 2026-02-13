@@ -3,7 +3,7 @@ package org.example.salesincentivesystem.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "app_users")
 public class User {
 
     @Id
