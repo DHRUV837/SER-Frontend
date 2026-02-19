@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: sales-incentive-backend
+    env: docker
+    plan: free
+    branch: main
+    rootDir: SalesIncentiveSystem
+    dockerfilePath: Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DB_HOST
+        fromDatabase:
+          name: sales-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: sales-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: sales-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: sales-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: sales-db
+          property: password
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+
+databases:
+  - name: sales-db
+    databaseName: sales_incentive
+    user: sales_user
+    plan: free

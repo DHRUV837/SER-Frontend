@@ -1,0 +1,13 @@
+.git
+.gitignore
+build
+.gradle
+bin
+out
+.idea
+*.class
+*.jar
+*.war
+.DS_Store
+frontend
+node_modules
