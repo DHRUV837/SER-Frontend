@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../../api";
+import api, { authApi } from "../../api";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import SalesLayout from "../../layouts/SalesLayout";
@@ -92,7 +92,8 @@ const MyDealsPage = () => {
 
     const handleStatusUpdate = async (dealId, newStatus) => {
         try {
-            await api.patch(`/api/deals/${dealId}/status`, {
+            // Use authApi instead of api to avoid unwanted requestorId parameter
+            await authApi.patch(`/api/deals/${dealId}/status`, {
                 status: newStatus,
                 comment: newStatus === "IN_PROGRESS" ? "Started working on this deal." : "Deal submitted for approval."
             });
