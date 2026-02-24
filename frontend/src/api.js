@@ -16,14 +16,37 @@ const api = axios.create({
     },
 });
 
-// Add a request interceptor to include auth token if available (future proofing)
-// api.interceptors.request.use((config) => {
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//         config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-// });
+// Add a request interceptor to include requestorId for data isolation
+// BUT skip it for PATCH requests to deal status endpoints
+api.interceptors.request.use((config) => {
+    try {
+        // DO NOT add requestorId for PATCH requests to deal status endpoint
+        if (config.method === 'patch' && config.url.includes('/api/deals/') && config.url.includes('/status')) {
+            console.log('[API Interceptor] Skipping requestorId for status update:', config.url);
+            return config;
+        }
+
+        const authData = localStorage.getItem('auth');
+        if (authData) {
+            const auth = JSON.parse(authData);
+            const userId = auth?.user?.id;
+
+            if (userId) {
+                // Ensure config.params exists
+                config.params = config.params || {};
+                // Append requestorId to query parameters if not already present
+                if (!config.params.requestorId) {
+                    config.params.requestorId = userId;
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error in api interceptor:', error);
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
 
 // Create a separate axios instance for requests that need auth but NO requestorId
 const authApi = axios.create({

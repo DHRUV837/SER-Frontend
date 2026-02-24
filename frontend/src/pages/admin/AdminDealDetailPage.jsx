@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import api, { authApi } from "../../api";
+import api from "../../api";
 import AdminLayout from "../../layouts/AdminLayout";
 import PageHeader from "../../components/common/PageHeader";
 import StatusBadge from "../../components/common/StatusBadge";
@@ -38,8 +38,8 @@ const AdminDealDetailPage = () => {
                 payload.comment = reasonOrComment;
             }
 
-            // Use authApi which includes auth token but NOT requestorId parameter
-            await authApi.patch(`/api/deals/${deal.id}/status`, payload);
+            // The api interceptor will automatically skip requestorId for this endpoint
+            await api.patch(`/api/deals/${deal.id}/status`, payload);
             fetchDealDetails();
         } catch (err) {
             console.error("Status update failed:", err);
