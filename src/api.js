@@ -56,9 +56,19 @@ authApi.interceptors.request.use((config) => {
         if (authData) {
             const auth = JSON.parse(authData);
             const token = auth?.token;
+            const role = auth?.role;
+            const userId = auth?.user?.id;
 
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
+            }
+            
+            // Add role and userId headers for backend authorization
+            if (role) {
+                config.headers['X-User-Role'] = role;
+            }
+            if (userId) {
+                config.headers['X-User-Id'] = userId;
             }
         }
     } catch (error) {
