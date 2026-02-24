@@ -40,8 +40,22 @@ const AdminDealDetailPage = () => {
             }
 
             const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-            // Use plain axios to avoid requestorId parameter being added by interceptor
-            await axios.patch(`${API_URL}/api/deals/${deal.id}/status`, payload);
+            
+            // Get auth token from localStorage
+            const authData = localStorage.getItem('auth');
+            const token = authData ? JSON.parse(authData)?.token : null;
+            
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            
+            // Add Authorization header if token exists
+            if (token) {
+                headers.Authorization = `Bearer ${token}`;
+            }
+            
+            // Use plain axios with auth headers to avoid unwanted requestorId parameter
+            await axios.patch(`${API_URL}/api/deals/${deal.id}/status`, payload, { headers });
             fetchDealDetails();
         } catch (err) {
             console.error("Status update failed:", err);
