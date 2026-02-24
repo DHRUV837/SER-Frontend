@@ -45,7 +45,8 @@ const AcceptInvite = () => {
         }
 
         try {
-            await api.post(`/api/auth/complete-invite?token=${token}`, {
+            await api.post("/api/auth/complete-invite", {
+                token,
                 password
             });
             setStatus("success");
