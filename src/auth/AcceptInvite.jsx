@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import AppIcon from "../components/common/AppIcon";
 import api, { API_URL } from "../api";
+import axios from "axios";
 import { ArrowRight, Lock, User, CheckCircle } from "lucide-react";
 
 const AcceptInvite = () => {
@@ -45,7 +46,7 @@ const AcceptInvite = () => {
         }
 
         try {
-            await api.post("/api/auth/complete-invite", {
+            await axios.post(`${API_URL}/api/auth/complete-invite`, {
                 token,
                 password
             });

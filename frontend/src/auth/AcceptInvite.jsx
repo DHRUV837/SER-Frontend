@@ -45,7 +45,7 @@ const AcceptInvite = () => {
         }
 
         try {
-            await api.post("/api/auth/complete-invite", {
+            await axios.post(`${API_URL}/api/auth/complete-invite`, {
                 token,
                 password
             });
