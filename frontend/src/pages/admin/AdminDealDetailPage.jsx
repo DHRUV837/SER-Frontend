@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
-import api from "../../api";
+import api, { authApi } from "../../api";
 import AdminLayout from "../../layouts/AdminLayout";
 import PageHeader from "../../components/common/PageHeader";
 import StatusBadge from "../../components/common/StatusBadge";
@@ -39,23 +38,8 @@ const AdminDealDetailPage = () => {
                 payload.comment = reasonOrComment;
             }
 
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-            
-            // Get auth token from localStorage
-            const authData = localStorage.getItem('auth');
-            const token = authData ? JSON.parse(authData)?.token : null;
-            
-            const headers = {
-                'Content-Type': 'application/json'
-            };
-            
-            // Add Authorization header if token exists
-            if (token) {
-                headers.Authorization = `Bearer ${token}`;
-            }
-            
-            // Use plain axios with auth headers to avoid unwanted requestorId parameter
-            await axios.patch(`${API_URL}/api/deals/${deal.id}/status`, payload, { headers });
+            // Use authApi which includes auth token but NOT requestorId parameter
+            await authApi.patch(`/api/deals/${deal.id}/status`, payload);
             fetchDealDetails();
         } catch (err) {
             console.error("Status update failed:", err);

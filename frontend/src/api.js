@@ -25,5 +25,33 @@ const api = axios.create({
 //     return config;
 // });
 
+// Create a separate axios instance for requests that need auth but NO requestorId
+const authApi = axios.create({
+    baseURL: API_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+// Add only auth header, no requestorId
+authApi.interceptors.request.use((config) => {
+    try {
+        const authData = localStorage.getItem('auth');
+        if (authData) {
+            const auth = JSON.parse(authData);
+            const token = auth?.token;
+
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        }
+    } catch (error) {
+        console.error('Error in authApi interceptor:', error);
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
 export default api;
-export { API_URL };
+export { API_URL, authApi };
