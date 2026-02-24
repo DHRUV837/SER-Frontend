@@ -6,6 +6,8 @@
  */
 import axios from 'axios';
 
+console.log('✅ [API.JS] - NEW VERSION LOADED - authApi instance created');
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 // Create an axios instance with default config
