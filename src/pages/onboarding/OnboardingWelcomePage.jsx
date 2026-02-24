@@ -1,14 +1,13 @@
-import { API_URL } from "../../api";
+import api from "../../api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
-import { CheckCircle2, Circle, Target, FileText, Settings, UserPlus, Sparkles, ArrowRight, TrendingUp } from "lucide-react";
-import axios from "axios";
+import { CheckCircle2, Circle, Target, FileText, Settings, UserPlus, Sparkles, ArrowRight, TrendingUp, Rocket } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 const OnboardingWelcomePage = () => {
-    const { auth, updateOnboardingStatus } = useAuth();
+    const { auth, updateUser } = useAuth();
     const navigate = useNavigate();
     const [progress, setProgress] = useState({
         firstTargetCreated: false,
@@ -75,7 +74,7 @@ const OnboardingWelcomePage = () => {
 
     const fetchProgress = async () => {
         try {
-            const response = await axios.get(`${API_URL}/api/onboarding/progress/${auth.user.id}`);
+            const response = await api.get(`/api/onboarding/progress/${auth.user.id}`);
             const newProgress = response.data;
 
             // Check if just completed
@@ -95,8 +94,8 @@ const OnboardingWelcomePage = () => {
 
         // Update backend
         try {
-            await axios.post(`${API_URL}/api/onboarding/complete/${auth.user.id}`);
-            updateOnboardingStatus(true);
+            await api.post(`/api/onboarding/complete/${auth.user.id}`);
+            updateUser(true);
         } catch (error) {
             console.error("Failed to complete onboarding:", error);
         }

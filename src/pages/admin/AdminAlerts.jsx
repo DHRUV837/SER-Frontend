@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import api, { API_URL } from "../../api";
 import AdminLayout from "../../layouts/AdminLayout";
 import PageHeader from "../../components/common/PageHeader";
@@ -45,7 +44,7 @@ const AdminAlerts = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this rule?")) return;
         try {
-            await axios.delete(`${API_URL}/rules/${id}`);
+            await api.delete(`/rules/${id}`);
             fetchRules();
         } catch (error) {
             alert("Failed to delete rule");

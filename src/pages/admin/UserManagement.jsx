@@ -1,7 +1,6 @@
-import { API_URL } from "../../api";
+import api from "../../api";
 import SalesLayout from "../../layouts/SalesLayout";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import PageHeader from "../../components/common/PageHeader";
 import InviteUserModal from "../../components/admin/InviteUserModal";
 import { useAuth } from "../../context/AuthContext";
@@ -18,7 +17,8 @@ const UserManagement = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get(`${API_URL}/api/users?currentUserId=${auth.user?.id}`);
+            // Global interceptor handles requestorId automatically
+            const res = await api.get("/api/users");
             setUsers(res.data);
             setLoading(false);
         } catch (err) {
@@ -32,7 +32,7 @@ const UserManagement = () => {
         if (!window.confirm(`Are you sure you want to ${newStatus === 'DISABLED' ? 'Disable' : 'Activate'} this user?`)) return;
 
         try {
-            await axios.patch(`${API_URL}/api/users/${userId}/status`, { status: newStatus });
+            await api.patch(`/api/users/${userId}/status`, { status: newStatus });
             setUsers(users.map(u => u.id === userId ? { ...u, accountStatus: newStatus } : u));
         } catch (err) {
             alert("Failed to update status");
@@ -98,6 +98,7 @@ const UserManagement = () => {
                                         <button
                                             onClick={() => toggleStatus(user.id, user.accountStatus)}
                                             className={`px-3 py-1 rounded text-sm font-medium transition-colors
+                                                ${user.accountStatus === 'ACTIVE'
                                                     ? 'bg-red-50 text-red-600 hover:bg-red-100 border border-red-200'
                                                     : 'bg-green-50 text-green-600 hover:bg-green-100 border border-green-200'}`}
                                         >

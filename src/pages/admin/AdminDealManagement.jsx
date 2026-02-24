@@ -4,11 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import api from "../../api";
 import AdminLayout from "../../layouts/AdminLayout";
 import PageHeader from "../../components/common/PageHeader";
-import { useAuth } from "../../context/AuthContext";
 
 const AdminDealManagement = () => {
     const navigate = useNavigate();
-    const { auth } = useAuth();
     const [deals, setDeals] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -20,17 +18,16 @@ const AdminDealManagement = () => {
 
     useEffect(() => {
         fetchDeals();
-    }, []);
+    }, [statusFilter, priorityFilter]);
 
     const fetchDeals = async () => {
         setLoading(true);
         try {
-            // Fetch from /api/deals with proper filtering and data isolation
-            const requestorId = auth?.user?.id;
-            const url = requestorId 
-                ? `/api/deals?requestorId=${requestorId}`
-                : "/api/deals";
-            const response = await api.get(url);
+            const params = {};
+            if (statusFilter) params.status = statusFilter;
+            if (priorityFilter) params.priority = priorityFilter;
+
+            const response = await api.get("/admin/deals", { params });
             setDeals(response.data);
         } catch (error) {
             console.error("Error fetching deals:", error);
@@ -61,60 +58,19 @@ const AdminDealManagement = () => {
         return badges[s] || badges.DRAFT;
     };
 
-    // Map UI phase filter to actual status values in data (case-insensitive)
-    const phaseToStatuses = {
-        ASSIGNED: ["recommended"],
-        PENDING: ["draft"],
-        APPROVED: ["approved"],
-        REJECTED: ["rejected"]
-    };
-
-    // Map UI tier filter to actual priority values in data (case-insensitive)
-    const tierToPriority = {
-        HIGH: ["high"],
-        MEDIUM: ["medium"],
-        LOW: ["low"]
-    };
-
-    const filteredDeals = deals.filter(deal => {
-        // Search filter
-        const matchesSearch =
-            (deal.dealName && deal.dealName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-            (deal.organizationName && deal.organizationName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-            (deal.id && deal.id.toString().includes(searchTerm));
-        // Status/phase filter (robust, case-insensitive)
-        let matchesPhase = true;
-        if (statusFilter && deal.status) {
-            const phaseStatuses = phaseToStatuses[statusFilter];
-            if (phaseStatuses) {
-                matchesPhase = phaseStatuses.some(
-                    s => s.toLowerCase() === deal.status.toLowerCase()
-                );
-            }
-        }
-        // Tier/priority filter (robust, case-insensitive)
-        let matchesTier = true;
-        if (priorityFilter && deal.priority) {
-            const tierPriorities = tierToPriority[priorityFilter];
-            if (tierPriorities) {
-                matchesTier = tierPriorities.includes(deal.priority.toLowerCase());
-            }
-        }
-        return matchesSearch && matchesPhase && matchesTier;
-    });
+    const filteredDeals = deals.filter(deal =>
+        deal.dealName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        deal.organizationName?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const sortedDeals = [...filteredDeals].sort((a, b) => {
-        // Fallback to id if no date fields
-        const dateA = a.createdAt ? new Date(a.createdAt) : (a.date ? new Date(a.date) : new Date(0));
-        const dateB = b.createdAt ? new Date(b.createdAt) : (b.date ? new Date(b.date) : new Date(0));
-        if (dateA.getTime() === 0 && dateB.getTime() === 0) {
-            return (sortOrder === "latest" ? b.id - a.id : a.id - b.id);
-        }
+        const dateA = new Date(a.createdAt || a.date);
+        const dateB = new Date(b.createdAt || b.date);
         return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
     });
 
     const getInitials = (name) => {
-        if (!name || typeof name !== "string") return "?";
+        if (!name) return "?";
         return name.split(" ").map(n => n[0]).join("").toUpperCase().substring(0, 2);
     };
 
@@ -248,7 +204,7 @@ const AdminDealManagement = () => {
                             <tbody className="divide-y divide-slate-50 dark:divide-white/5">
                                 {sortedDeals.map((deal, idx) => (
                                     <motion.tr
-                                        key={deal.id || idx}
+                                        key={deal.id}
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: idx * 0.03 }}
@@ -257,10 +213,10 @@ const AdminDealManagement = () => {
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-50 to-indigo-50 dark:from-white/5 dark:to-white/10 flex items-center justify-center border border-primary-100 dark:border-white/10 shadow-sm text-primary-500 font-black">
-                                                    {getInitials(deal.organizationName || deal.dealName || "?")}
+                                                    {getInitials(deal.organizationName)}
                                                 </div>
                                                 <div>
-                                                    <div className="text-sm font-black text-slate-900 dark:text-white group-hover:text-primary-600 transition-colors uppercase tracking-tight">{deal.dealName || `MND-${deal.id || idx}`}</div>
+                                                    <div className="text-sm font-black text-slate-900 dark:text-white group-hover:text-primary-600 transition-colors uppercase tracking-tight">{deal.dealName || `MND-${deal.id}`}</div>
                                                     <div className="text-xs font-bold text-slate-400 dark:text-slate-500 mt-0.5">{deal.organizationName || "Unknown Entity"}</div>
                                                 </div>
                                             </div>
@@ -268,13 +224,13 @@ const AdminDealManagement = () => {
                                         <td className="px-6 py-6">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-7 h-7 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center text-[10px] font-black text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10">
-                                                    {getInitials(deal.user?.name || "?")}
+                                                    {getInitials(deal.user?.name)}
                                                 </div>
                                                 <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{deal.user?.name || "Unassigned"}</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-6">
-                                            <div className="text-sm font-black text-slate-900 dark:text-white">{deal.currency || '₹'} {deal.amount ? (deal.amount / 1000).toFixed(1) : "-"}k</div>
+                                            <div className="text-sm font-black text-slate-900 dark:text-white">{deal.currency || '₹'} {(deal.amount / 1000).toFixed(1)}k</div>
                                             <div className="text-[10px] font-bold text-slate-400 truncate max-w-[100px]">Base Liquidity</div>
                                         </td>
                                         <td className="px-6 py-6">

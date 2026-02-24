@@ -1,11 +1,10 @@
-import { API_URL } from "../../api";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle, Circle, Lock, ArrowRight, ShieldCheck, FileText, Target, Users, Loader } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppIcon from "../../components/common/AppIcon";
 import { useAuth } from "../../context/AuthContext";
-import axios from "axios";
+import api from "../../api";
 import { TargetStep, DealStep, PolicyStep, InviteStep } from "../../components/onboarding/OnboardingSteps";
 
 function BriefcaseIcon(props) {
@@ -36,7 +35,7 @@ const AdminOnboarding = () => {
     const fetchProgress = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`${API_URL}/api/onboarding/progress/${auth.user.id}`);
+            const res = await api.get(`/api/onboarding/progress/${auth.user.id}`);
             const data = res.data;
             setProgress(data);
 

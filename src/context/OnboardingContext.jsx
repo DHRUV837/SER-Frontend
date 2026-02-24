@@ -35,7 +35,7 @@ export const OnboardingProvider = ({ children }) => {
                 const [policiesRes, dealsRes, usersRes] = await Promise.allSettled([
                     api.get("/api/policy"),
                     api.get("/api/deals"),
-                    api.get(`/api/users?currentUserId=${auth.user.id}`)
+                    api.get("/api/users")
                 ]);
 
                 const hasPolicies = policiesRes.status === 'fulfilled' && Array.isArray(policiesRes.value.data) && policiesRes.value.data.length > 0;

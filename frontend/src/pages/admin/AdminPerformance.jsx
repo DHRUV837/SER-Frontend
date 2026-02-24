@@ -1,6 +1,5 @@
-import { API_URL } from "../../api";
+import api from "../../api";
 import React, { useEffect, useState, useMemo } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Line, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -37,7 +36,7 @@ const AdminPerformance = () => {
                 // 1. Fetch User Profile
                 let userObj = { name: "Loading...", email: "..." };
                 try {
-                    const uRes = await axios.get(`${API_URL}/api/users/${userId}`);
+                    const uRes = await api.get(`/api/users/${userId}`);
                     userObj = uRes.data;
                 } catch (e) {
                     try {
@@ -52,12 +51,12 @@ const AdminPerformance = () => {
                 let allDeals = [];
                 try {
                     const requestorIdParam = auth.user?.id ? `&requestorId=${auth.user.id}` : "";
-                    const dealsRes = await axios.get(`${API_URL}/api/deals?userId=${userId}${requestorIdParam}`);
+                    const dealsRes = await api.get(`/api/deals?userId=${userId}${requestorIdParam}`);
                     allDeals = dealsRes.data || [];
                 } catch (e) {
                     // Fallback attempt
                     const requestorIdParam = auth.user?.id ? `?requestorId=${auth.user.id}` : "";
-                    const dealsRes = await axios.get(`${API_URL}/api/deals${requestorIdParam}`);
+                    const dealsRes = await api.get(`/api/deals${requestorIdParam}`);
                     allDeals = (dealsRes.data || []).filter(d => d.user?.id == userId || d.userId == userId || (d.user && d.user.id && d.user.id.toString() === userId.toString()));
                 }
 
@@ -79,7 +78,7 @@ const AdminPerformance = () => {
 
                 // 3. Fetch Performance Metrics from Backend
                 try {
-                    const perfRes = await axios.get(`${API_URL}/admin/performance/${userId}`);
+                    const perfRes = await api.get(`/admin/performance/${userId}`);
                     const perfData = perfRes.data;
 
                     // Transform backend data to match frontend expectations

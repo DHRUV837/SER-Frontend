@@ -35,10 +35,8 @@ const AdminDealCreate = () => {
 
     const fetchSalesUsers = async () => {
         try {
-            const userId = localStorage.getItem("userId") || "1";
-            const response = await api.get("/api/users", {
-                params: { currentUserId: userId }
-            });
+            // Global interceptor handles requestorId automatically
+            const response = await api.get("/api/users");
             const sales = response.data.filter(u => u.role === "SALES" && u.accountStatus === "ACTIVE");
             setSalesUsers(sales);
         } catch (error) {

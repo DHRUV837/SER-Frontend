@@ -45,7 +45,7 @@ const AdminAlerts = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this rule?")) return;
         try {
-            await axios.delete(`${API_URL}/rules/${id}`);
+            await api.delete(`/rules/${id}`);
             fetchRules();
         } catch (error) {
             alert("Failed to delete rule");

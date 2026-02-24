@@ -1,8 +1,7 @@
-import { API_URL } from "../../api";
 import { CheckCircle2, Circle, Target, FileText, Settings, UserPlus, Sparkles, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../api";
 import { useAuth } from "../../context/AuthContext";
 
 const OnboardingChecklist = () => {

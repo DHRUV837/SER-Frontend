@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Sparkles } from "lucide-react";
-import axios from "axios";
 
 const CompletionStep = () => {
     const { auth, login } = useAuth(); // We need login to update the local auth state

@@ -1,8 +1,7 @@
-import { API_URL } from "../../api";
+import api from "../../api";
 import { CheckCircle2, Circle, Target, FileText, Settings, UserPlus, Sparkles, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 
 const OnboardingChecklist = () => {
@@ -67,7 +66,7 @@ const OnboardingChecklist = () => {
 
     const fetchProgress = async () => {
         try {
-            const response = await axios.get(`${API_URL}/api/onboarding/progress/${auth.user.id}`);
+            const response = await api.get(`/api/onboarding/progress/${auth.user.id}`);
             const newProgress = response.data;
 
             // Check if just completed

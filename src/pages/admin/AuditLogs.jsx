@@ -1,7 +1,6 @@
-import { API_URL } from "../../api";
+import api from "../../api";
 import SalesLayout from "../../layouts/SalesLayout";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import PageHeader from "../../components/common/PageHeader";
 
 const AuditLogs = () => {
@@ -30,11 +29,11 @@ const AuditLogs = () => {
             if (filters.startDate) params.startDate = filters.startDate + "T00:00:00";
             if (filters.endDate) params.endDate = filters.endDate + "T23:59:59";
 
-            const url = Object.keys(params).length > 0
-                ? `${API_URL}/api/audit-logs/search`
-                : `${API_URL}/api/audit-logs`;
+            const endpoint = Object.keys(params).length > 0
+                ? "/api/audit-logs/search"
+                : "/api/audit-logs";
 
-            const response = await axios.get(url, { params });
+            const response = await api.get(endpoint, { params });
             setLogs(response.data);
         } catch (error) {
             console.error("Failed to fetch audit logs", error);

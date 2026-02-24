@@ -73,7 +73,9 @@ const AdminDashboard = () => {
     const inProgressDeals = deals.filter(d => (d.status || "").toLowerCase() === "in_progress");
     const approvedDeals = deals.filter(d => (d.status || "").toLowerCase() === "approved");
     const rejectedDeals = deals.filter(d => (d.status || "").toLowerCase() === "rejected");
-    const totalDisbursed = approvedDeals.reduce((acc, d) => acc + (d.incentive || 0), 0);
+    const totalDisbursed = approvedDeals
+        .filter(d => (d.payoutStatus || "").toUpperCase() === "PAID")
+        .reduce((acc, d) => acc + (d.incentive || 0), 0);
     const activeUsers = new Set(deals.map(d => d.user?.id).filter(Boolean)).size;
 
     // High value deals requiring attention
@@ -83,7 +85,7 @@ const AdminDashboard = () => {
     const inactiveUsers = 3;
 
     // Unprocessed payouts (approved but not paid)
-    const unprocessedPayouts = approvedDeals.filter(d => !d.paid).length;
+    const unprocessedPayouts = approvedDeals.filter(d => (d.payoutStatus || "").toUpperCase() !== "PAID").length;
 
     // Chart data
     const statusData = [

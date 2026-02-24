@@ -57,9 +57,9 @@ function Dashboard() {
         )}
 
         {[
-          { label: `Total Deals", value: totalDeals },
-          { label: 'Total Revenue', value: '₹${totalRevenue}` },
-          { label: 'Total Commission', value: '₹${totalCommission}` }
+          { label: "Total Deals", value: totalDeals },
+          { label: "Total Revenue", value: `₹${totalRevenue.toLocaleString()}` },
+          { label: "Total Commission", value: `₹${totalCommission.toLocaleString()}` }
         ].map((card, i) => (
           <motion.div
             key={i}

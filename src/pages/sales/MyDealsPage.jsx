@@ -92,30 +92,30 @@ const MyDealsPage = () => {
 
     const handleStatusUpdate = async (dealId, newStatus) => {
         try {
-            await api.patch(`/api/deals/${dealId}/status`, {
+            const payload = {
                 status: newStatus,
                 comment: newStatus === "IN_PROGRESS" ? "Started working on this deal." : "Deal submitted for approval."
-            });
-            fetchMyDeals();
-        } catch (error) {
-            console.error("Failed to update status", error);
-            alert("Failed to update status. Please try again.");
-        }
-    };
+            };
 
-    const handleAdminApproval = async (dealId, comment) => {
-        try {
-            console.log("Sending approval request for deal:", { dealId, comment });
-            const response = await api.patch(`/api/deals/${dealId}/status`, {
-                status: "Approved",
-                comment: comment || "Approved by admin."
-            });
-            console.log("Approval response:", response);
-            fetchMyDeals();
-            alert("Deal approved successfully.");
+            console.log(`[MyDeals] Updating deal ${dealId} to status: ${newStatus}`, payload);
+
+            const response = await api.patch(`/api/deals/${dealId}/status`, payload);
+
+            console.log(`[MyDeals] Successfully updated deal ${dealId}:`, response.data);
+
+            // Refresh deals list
+            await fetchMyDeals();
         } catch (error) {
-            console.error("Failed to approve deal", error.response?.data || error.message);
-            alert("Failed to update deal status. Please check the console for more details.");
+            console.error(`[MyDeals] Failed to update deal ${dealId} status:`, error);
+            console.error("[MyDeals] Error details:", {
+                message: error.message,
+                response: error.response?.data,
+                status: error.response?.status,
+                requestedStatus: newStatus
+            });
+
+            const errorMsg = error.response?.data?.message || error.message || "Failed to update status";
+            alert(`Error updating deal status: ${errorMsg}\n\nPlease check the console for details or contact support.`);
         }
     };
 
@@ -241,7 +241,7 @@ const MyDealsPage = () => {
 
                                 <Link to={`/sales/my-deals/${deal.id}`}>
                                     <h3 className="text-lg font-bold text-text-primary mb-1 group-hover:text-primary-600 transition-colors line-clamp-1">
-                                        {(deal.dealName && deal.dealName.trim() !== "") ? deal.dealName : (deal.organizationName || "Unnamed Deal")}
+                                        {deal.dealName || deal.organizationName || "Unnamed Deal"}
                                     </h3>
                                 </Link>
                                 <p className="text-sm text-text-muted mb-4 font-medium flex items-center gap-1">
@@ -273,7 +273,6 @@ const MyDealsPage = () => {
                                     <div className="grid grid-cols-2 gap-3">
                                         <Link to={`/sales/my-deals/${deal.id}`} className="btn-secondary text-sm py-2 flex items-center justify-center">
                                             View Details
-                                
                                         </Link>
                                         <button
                                             onClick={() => handleStatusUpdate(deal.id, "IN_PROGRESS")}

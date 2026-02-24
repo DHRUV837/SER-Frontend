@@ -22,7 +22,7 @@ const AcceptInvite = () => {
         }
 
         // Validate Token with Backend
-        axios.get(`${API_URL}/api/invitations/validate?token=${token}`)
+        api.get(`/api/invitations/validate?token=${token}`)
             .then(res => {
                 if (res.data.valid) {
                     setInviteData(res.data);

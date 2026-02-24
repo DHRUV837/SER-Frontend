@@ -1,7 +1,6 @@
-import { API_URL } from "../../api";
 import SalesLayout from "../../layouts/SalesLayout";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../api";
 import PageHeader from "../../components/common/PageHeader";
 
 const AuditLogs = () => {

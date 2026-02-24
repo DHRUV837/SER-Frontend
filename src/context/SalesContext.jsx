@@ -43,10 +43,7 @@ export const SalesProvider = ({ children }) => {
       params.append("userId", targetUserId);
     }
 
-    // 2. ALWAYS pass the CURRENT USER ID as the Requestor for Security Context
-    if (userId) {
-      params.append("requestorId", userId);
-    }
+    // Global interceptor handles requestorId automatically
 
     if (params.toString()) {
       url += `?${params.toString()}`;

@@ -62,7 +62,7 @@ const IncentivePolicyPage = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this policy rule?")) return;
     try {
-      await axios.delete(`${API_URL}/api/policy/${id}`);
+      await api.delete(`/api/policy/${id}`);
       fetchPolicies();
     } catch (err) {
       alert("Failed to delete policy");
