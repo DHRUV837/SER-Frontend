@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 import api from "../../api";
 import AdminLayout from "../../layouts/AdminLayout";
 import PageHeader from "../../components/common/PageHeader";
@@ -38,7 +39,9 @@ const AdminDealDetailPage = () => {
                 payload.comment = reasonOrComment;
             }
 
-            await api.patch(`/api/deals/${deal.id}/status`, payload);
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+            // Use plain axios to avoid requestorId parameter being added by interceptor
+            await axios.patch(`${API_URL}/api/deals/${deal.id}/status`, payload);
             fetchDealDetails();
         } catch (err) {
             console.error("Status update failed:", err);

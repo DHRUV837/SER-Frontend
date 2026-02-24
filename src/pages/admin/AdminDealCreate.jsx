@@ -66,7 +66,14 @@ const AdminDealCreate = () => {
         setLoading(true);
 
         try {
-            await api.post("/admin/deals", formData);
+            // Convert string fields to appropriate types
+            const requestData = {
+                ...formData,
+                amount: parseFloat(formData.amount),
+                assignedUserId: parseInt(formData.assignedUserId, 10),
+                createdBy: parseInt(formData.createdBy, 10)
+            };
+            await api.post("/admin/deals", requestData);
 
             // Onboarding Progress update
             try {
