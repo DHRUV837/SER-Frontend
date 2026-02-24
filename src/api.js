@@ -59,6 +59,10 @@ authApi.interceptors.request.use((config) => {
             const role = auth?.role;
             const userId = auth?.user?.id;
 
+            console.log('[authApi] Token found:', !!token);
+            console.log('[authApi] Role:', role);
+            console.log('[authApi] UserId:', userId);
+
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }
@@ -70,6 +74,8 @@ authApi.interceptors.request.use((config) => {
             if (userId) {
                 config.headers['X-User-Id'] = userId;
             }
+        } else {
+            console.log('[authApi] WARNING: No auth data found in localStorage');
         }
     } catch (error) {
         console.error('Error in authApi interceptor:', error);
